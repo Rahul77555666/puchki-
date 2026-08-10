@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Sacramento&display=swap');
-        
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #0b0f19;
@@ -54,6 +54,31 @@
             transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
             z-index: 20;
         }
+
+        .step-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .step-dot.active {
+            background: #ec4899;
+            width: 20px;
+        }
+
+        .step-dot.done {
+            background: #ec4899;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .spinner {
+            animation: spin 0.8s linear infinite;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-y-auto">
@@ -64,7 +89,7 @@
 
     <!-- Main Window -->
     <main class="w-full max-w-md glass rounded-3xl p-6 shadow-2xl relative z-10 my-8">
-        
+
         <!-- Header -->
         <header class="text-center mb-6">
             <span class="inline-block px-3 py-1 bg-pink-500/10 text-pink-400 border border-pink-500/20 rounded-full text-[10px] font-bold tracking-widest uppercase mb-2">Special Invite Just For You</span>
@@ -72,29 +97,35 @@
             <p class="text-slate-400 text-sm mt-1">AKA Meri <span class="cursive text-xl text-pink-400">Puchki</span></p>
         </header>
 
-        <!-- INTERFACE 1: Proposal Gate (Features Photo 1) -->
+        <!-- Progress Dots (shown for steps 2-4 only) -->
+        <div id="progress-dots" class="hidden justify-center gap-2 mb-5">
+            <div class="step-dot" data-step="2"></div>
+            <div class="step-dot" data-step="3"></div>
+            <div class="step-dot" data-step="4"></div>
+        </div>
+
+        <!-- INTERFACE 1: Proposal Gate -->
         <div id="interface-1" class="text-center space-y-6 py-2 fade-in">
             <h2 class="text-xl font-bold text-white">Kya bolti Puchki, Date pe chalegi mere saath? 🥺</h2>
-            
+
             <div class="h-48 bg-slate-950 border border-slate-700/80 rounded-2xl p-2 flex items-center justify-center">
-                <img src="photo1.jpeg?v=10" alt="Memory 1" class="max-h-full max-w-full object-contain rounded-xl">
+                <img src="photo1.jpeg" alt="Memory 1" class="max-h-full max-w-full object-contain rounded-xl" onerror="this.onerror=null;this.replaceWith(heartFallback());">
             </div>
 
             <div class="flex flex-row items-center justify-center gap-6 w-full relative min-h-[80px]" id="gate-buttons">
-                <!-- HAAN BILKUL button is now 100% stationary -->
-                <button onclick="goToInterface(2)" class="px-8 py-3 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-lg shadow-pink-500/25 transition-all z-10">
+                <button onclick="celebrateYes(); goToInterface(2)" class="px-8 py-3 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-lg shadow-pink-500/25 transition-all z-10">
                     HAAN BILKUL! 💖
                 </button>
-                <button id="no-btn" onmouseover="runAway('no-btn')" onclick="runAway('no-btn')" class="runaway-btn px-8 py-3 bg-slate-800 text-slate-300 font-bold rounded-xl border border-slate-700">
+                <button id="no-btn" onmouseover="runAway('no-btn')" onclick="runAway('no-btn')" ontouchstart="runAway('no-btn')" class="runaway-btn px-8 py-3 bg-slate-800 text-slate-300 font-bold rounded-xl border border-slate-700">
                     NAHI JAANA 😜
                 </button>
             </div>
         </div>
 
-        <!-- INTERFACE 2: Step 1 Vibe Selection (Features Photo 2) -->
+        <!-- INTERFACE 2: Step 1 Vibe Selection -->
         <div id="interface-2" class="hidden space-y-6 py-2 fade-in">
             <div class="h-48 bg-slate-950 border border-slate-700/80 rounded-2xl p-2 flex items-center justify-center">
-                <img src="photo2.jpeg?v=10" alt="Memory 2" class="max-h-full max-w-full object-contain rounded-xl">
+                <img src="photo2.jpeg" alt="Memory 2" class="max-h-full max-w-full object-contain rounded-xl" onerror="this.onerror=null;this.replaceWith(heartFallback());">
             </div>
 
             <div>
@@ -113,15 +144,20 @@
                 </div>
             </div>
 
-            <button id="next-2-btn" onclick="goToInterface(3)" disabled class="w-full py-3.5 bg-slate-800 text-slate-500 font-bold rounded-xl transition-all shadow-lg cursor-not-allowed">
-                Next Step ➡️
-            </button>
+            <div class="flex gap-3">
+                <button onclick="goToInterface(1)" class="px-4 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl transition-all">
+                    ◀
+                </button>
+                <button id="next-2-btn" onclick="goToInterface(3)" disabled class="flex-1 py-3.5 bg-slate-800 text-slate-500 font-bold rounded-xl transition-all shadow-lg cursor-not-allowed">
+                    Next Step ➡️
+                </button>
+            </div>
         </div>
 
-        <!-- INTERFACE 3: Step 2 Food Selection (Features Photo 4) -->
+        <!-- INTERFACE 3: Step 2 Food Selection -->
         <div id="interface-3" class="hidden space-y-6 py-2 fade-in">
             <div class="h-48 bg-slate-950 border border-slate-700/80 rounded-2xl p-2 flex items-center justify-center">
-                <img src="photo4.jpeg?v=10" alt="Memory 4" class="max-h-full max-w-full object-contain rounded-xl">
+                <img src="photo4.jpeg" alt="Memory 4" class="max-h-full max-w-full object-contain rounded-xl" onerror="this.onerror=null;this.replaceWith(heartFallback());">
             </div>
 
             <div>
@@ -140,15 +176,20 @@
                 </div>
             </div>
 
-            <button id="next-3-btn" onclick="goToInterface(4)" disabled class="w-full py-3.5 bg-slate-800 text-slate-500 font-bold rounded-xl transition-all shadow-lg cursor-not-allowed">
-                Next Step ➡️
-            </button>
+            <div class="flex gap-3">
+                <button onclick="goToInterface(2)" class="px-4 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl transition-all">
+                    ◀
+                </button>
+                <button id="next-3-btn" onclick="goToInterface(4)" disabled class="flex-1 py-3.5 bg-slate-800 text-slate-500 font-bold rounded-xl transition-all shadow-lg cursor-not-allowed">
+                    Next Step ➡️
+                </button>
+            </div>
         </div>
 
-        <!-- INTERFACE 4: Step 3 Finale Activity (Features Photo 5) -->
+        <!-- INTERFACE 4: Step 3 Finale Activity -->
         <div id="interface-4" class="hidden space-y-6 py-2 fade-in">
             <div class="h-48 bg-slate-950 border border-slate-700/80 rounded-2xl p-2 flex items-center justify-center">
-                <img src="photo5.jpeg?v=10" alt="Memory 5" class="max-h-full max-w-full object-contain rounded-xl">
+                <img src="photo5.jpeg" alt="Memory 5" class="max-h-full max-w-full object-contain rounded-xl" onerror="this.onerror=null;this.replaceWith(heartFallback());">
             </div>
 
             <div>
@@ -167,17 +208,21 @@
                 </div>
             </div>
 
-            <!-- Button text changed to Final Step -->
-            <button id="next-4-btn" onclick="goToInterface(5)" disabled class="w-full py-3.5 bg-slate-800 text-slate-500 font-bold rounded-xl transition-all shadow-lg cursor-not-allowed">
-                Final Step ➡️
-            </button>
+            <div class="flex gap-3">
+                <button onclick="goToInterface(3)" class="px-4 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl transition-all">
+                    ◀
+                </button>
+                <button id="next-4-btn" onclick="goToInterface(5)" disabled class="flex-1 py-3.5 bg-slate-800 text-slate-500 font-bold rounded-xl transition-all shadow-lg cursor-not-allowed">
+                    Final Step ➡️
+                </button>
+            </div>
         </div>
 
-        <!-- INTERFACE 5: Payment Prank (Only Rahul Karega button moves) -->
+        <!-- INTERFACE 5: Payment Prank Gate -->
         <div id="interface-5" class="hidden text-center space-y-6 py-4 fade-in relative min-h-[280px] flex flex-col justify-center items-center">
-            
+
             <div class="w-32 h-32 rounded-2xl overflow-hidden border-2 border-emerald-500/50 bg-slate-950 p-1 mb-2 shadow-lg flex items-center justify-center">
-                <img src="photo1.jpeg?v=10" alt="Payment Memory" class="max-h-full max-w-full object-contain rounded-xl">
+                <img src="photo1.jpeg" alt="Payment Memory" class="max-h-full max-w-full object-contain rounded-xl" onerror="this.onerror=null;this.replaceWith(heartFallback());">
             </div>
 
             <div>
@@ -186,20 +231,18 @@
             </div>
 
             <div class="flex flex-row items-center justify-center gap-6 w-full relative min-h-[80px]" id="payment-buttons">
-                <!-- Tannu button is completely stationary -->
                 <button onclick="goToInterface(6)" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition-all z-10">
                     Tannu Uthayegi 💅
                 </button>
-                <!-- Rahul button always dodges -->
-                <button id="rahul-btn" onmouseover="runAway('rahul-btn')" onclick="runAway('rahul-btn')" class="runaway-btn px-6 py-3 bg-slate-800 text-slate-300 font-bold rounded-xl border border-slate-700">
+                <button id="rahul-btn" onmouseover="runAway('rahul-btn')" onclick="runAway('rahul-btn')" ontouchstart="runAway('rahul-btn')" class="runaway-btn px-6 py-3 bg-slate-800 text-slate-300 font-bold rounded-xl border border-slate-700">
                     Rahul Karega 🙈
                 </button>
             </div>
         </div>
 
-        <!-- INTERFACE 6: VIP Pass & PhonePe QR Code -->
+        <!-- INTERFACE 6: VIP Pass & Fake Payment Prank -->
         <div id="interface-6" class="hidden space-y-6 fade-in">
-            
+
             <!-- Pass Header -->
             <div class="border-2 border-dashed border-pink-500/40 rounded-2xl p-4 bg-pink-500/5 relative">
                 <div class="flex justify-between items-start mb-4">
@@ -217,42 +260,53 @@
                 </div>
             </div>
 
-            <!-- PhonePe QR Payment Box -->
-            <div class="border border-emerald-500/30 bg-emerald-950/20 rounded-2xl p-4 text-center space-y-3">
-                <div class="flex items-center justify-center gap-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">PhonePe Payment Due</span>
-                </div>
-                <p class="text-xs text-slate-300">Aisa tai hua tha ki Puchki kharcha uthayegi! 😉</p>
-                
-                <div class="text-2xl font-extrabold text-emerald-400">$100 USD <span class="text-xs text-slate-400 font-normal">(Date Charges)</span></div>
+            <!-- Fake Payment Prank Box -->
+            <div id="payment-box" class="border border-emerald-500/30 bg-emerald-950/20 rounded-2xl p-4 text-center space-y-3">
 
-                <!-- Custom PhonePe QR Code updated to 6287148397@ybl -->
-                <div class="flex justify-center py-2">
-                    <div class="bg-white p-3 rounded-xl border-2 border-emerald-500 shadow-lg">
-                        <img id="qr-code-img" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=6287148397@ybl%26pn=Rahul%26am=100%26cu=USD" alt="PhonePe QR Code" class="w-36 h-36">
-                    </div>
+                <!-- Stage 1: fake bill -->
+                <div id="pay-stage-1">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Payment Due</span>
+                    <p class="text-xs text-slate-300 mt-1">Aisa tai hua tha ki Puchki kharcha uthayegi! 😉</p>
+                    <div class="text-3xl font-extrabold text-emerald-400 mt-2">$10,000 <span class="text-xs text-slate-400 font-normal">USD</span></div>
+                    <button onclick="startFakePayment()" class="mt-3 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition-all text-sm">
+                        Pay Now 💳
+                    </button>
                 </div>
-                <p class="text-[10px] text-slate-400">Scan via PhonePe / GPay / PayTM to confirm date! 📲</p>
+
+                <!-- Stage 2: fake processing -->
+                <div id="pay-stage-2" class="hidden py-4">
+                    <svg class="spinner mx-auto" width="36" height="36" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-dasharray="45 20"/>
+                    </svg>
+                    <p class="text-sm text-emerald-300 mt-3 font-semibold">Processing payment...</p>
+                </div>
+
+                <!-- Stage 3: reveal -->
+                <div id="pay-stage-3" class="hidden">
+                    <div class="text-3xl mb-1">😘</div>
+                    <p class="text-lg font-extrabold text-white">Just Kidding, Puchki!</p>
+                    <p class="text-sm text-slate-300 mt-1">Ye sab ek prank tha — dinner is on me. Bas tu date pe chal! ❤️</p>
+                </div>
             </div>
 
             <!-- Photo Gallery Grid -->
             <div>
                 <h3 class="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3 text-center">Hamari Yaadein 📸</h3>
-                
+
                 <div class="grid grid-cols-2 gap-2">
                     <div class="h-32 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo1.jpeg?v=10" alt="Memory 1" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo1.jpeg" alt="Memory 1" class="max-h-full max-w-full object-contain rounded" onerror="this.onerror=null;this.replaceWith(heartFallback());">
                     </div>
                     <div class="h-32 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo2.jpeg?v=10" alt="Memory 2" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo2.jpeg" alt="Memory 2" class="max-h-full max-w-full object-contain rounded" onerror="this.onerror=null;this.replaceWith(heartFallback());">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2 mt-2">
                     <div class="h-32 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo4.jpeg?v=10" alt="Memory 4" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo4.jpeg" alt="Memory 4" class="max-h-full max-w-full object-contain rounded" onerror="this.onerror=null;this.replaceWith(heartFallback());">
                     </div>
                     <div class="h-32 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo5.jpeg?v=10" alt="Memory 5" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo5.jpeg" alt="Memory 5" class="max-h-full max-w-full object-contain rounded" onerror="this.onerror=null;this.replaceWith(heartFallback());">
                     </div>
                 </div>
             </div>
@@ -266,6 +320,30 @@
     <script>
         const selections = { vibe: null, food: null, activity: null };
 
+        function heartFallback() {
+            const div = document.createElement('div');
+            div.className = 'flex items-center justify-center text-4xl w-full h-full';
+            div.innerText = '❤️';
+            return div;
+        }
+
+        function updateProgress(interfaceNum) {
+            const dotsWrap = document.getElementById('progress-dots');
+            if (interfaceNum >= 2 && interfaceNum <= 4) {
+                dotsWrap.classList.remove('hidden');
+                dotsWrap.classList.add('flex');
+                document.querySelectorAll('.step-dot').forEach(dot => {
+                    const step = parseInt(dot.dataset.step);
+                    dot.classList.remove('active', 'done');
+                    if (step === interfaceNum) dot.classList.add('active');
+                    else if (step < interfaceNum) dot.classList.add('done');
+                });
+            } else {
+                dotsWrap.classList.add('hidden');
+                dotsWrap.classList.remove('flex');
+            }
+        }
+
         function goToInterface(interfaceNum) {
             for (let i = 1; i <= 6; i++) {
                 document.getElementById(`interface-${i}`).classList.add('hidden');
@@ -273,6 +351,7 @@
 
             document.getElementById(`interface-${interfaceNum}`).classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            updateProgress(interfaceNum);
 
             if (interfaceNum === 6) {
                 document.getElementById('res-vibe').innerText = selections.vibe;
@@ -285,6 +364,14 @@
                     origin: { y: 0.6 }
                 });
             }
+        }
+
+        function celebrateYes() {
+            confetti({
+                particleCount: 60,
+                spread: 60,
+                origin: { y: 0.6 }
+            });
         }
 
         // Dodging logic for NO and Rahul buttons
@@ -311,7 +398,6 @@
 
             createHeart(btnElement);
 
-            // Enable corresponding next button
             if (category === 'vibe') {
                 const btn = document.getElementById('next-2-btn');
                 btn.disabled = false;
@@ -340,6 +426,22 @@
             document.body.appendChild(heart);
 
             setTimeout(() => heart.remove(), 4000);
+        }
+
+        // Fake payment prank sequence — purely visual, no real payment happens
+        function startFakePayment() {
+            document.getElementById('pay-stage-1').classList.add('hidden');
+            document.getElementById('pay-stage-2').classList.remove('hidden');
+
+            setTimeout(() => {
+                document.getElementById('pay-stage-2').classList.add('hidden');
+                document.getElementById('pay-stage-3').classList.remove('hidden');
+                confetti({
+                    particleCount: 100,
+                    spread: 90,
+                    origin: { y: 0.6 }
+                });
+            }, 1800);
         }
     </script>
 </body>
