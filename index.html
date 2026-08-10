@@ -71,20 +71,11 @@
         .step-dot.done {
             background: #ec4899;
         }
-
-        .music-pulse {
-            animation: musicPulse 1.5s infinite;
-        }
-        @keyframes musicPulse {
-            0% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.6); }
-            70% { box-shadow: 0 0 0 8px rgba(236, 72, 153, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-y-auto">
 
-    <!-- Background Audio Element -->
+    <!-- Background Audio Element (Hidden Auto-play) -->
     <audio id="bg-music" loop preload="auto">
         <source src="song.mp3" type="audio/mpeg">
     </audio>
@@ -93,14 +84,6 @@
     <audio id="click-sound" preload="auto">
         <source src="audio.mp3" type="audio/mpeg">
     </audio>
-
-    <!-- Floating Music Toggle Button -->
-    <div class="fixed top-4 right-4 z-50">
-        <button id="music-btn" onclick="toggleMusic()" class="flex items-center gap-2 px-3 py-1.5 bg-slate-900/80 border border-pink-500/30 text-pink-400 rounded-full text-xs font-semibold backdrop-blur-md shadow-lg music-pulse transition-all">
-            <span id="music-icon">🎵</span>
-            <span id="music-text">Play Song</span>
-        </button>
-    </div>
 
     <!-- Ambient Background Glow -->
     <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-pink-600/15 rounded-full blur-[120px] pointer-events-none"></div>
@@ -132,6 +115,7 @@
             </div>
 
             <div class="flex flex-row items-center justify-center gap-6 w-full relative min-h-[80px]" id="gate-buttons">
+                <!-- Starts background music automatically on click -->
                 <button onclick="playMusicOnStart(); celebrateYes(); goToInterface(2)" class="px-8 py-3 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-lg shadow-pink-500/25 transition-all z-10">
                     HAAN BILKUL! 💖
                 </button>
@@ -324,36 +308,16 @@
     <!-- Logic Engine -->
     <script>
         const selections = { vibe: null, food: null, activity: null };
-        let isPlaying = false;
 
         function playMusicOnStart() {
             const audio = document.getElementById('bg-music');
-            audio.play().then(() => {
-                isPlaying = true;
-                document.getElementById('music-icon').innerText = '🎶';
-                document.getElementById('music-text').innerText = 'Playing';
-            }).catch(() => {});
+            audio.play().catch(() => {});
         }
 
         function playTannuSound() {
             const clickSound = document.getElementById('click-sound');
             clickSound.currentTime = 0;
             clickSound.play().catch(() => {});
-        }
-
-        function toggleMusic() {
-            const audio = document.getElementById('bg-music');
-            if (isPlaying) {
-                audio.pause();
-                isPlaying = false;
-                document.getElementById('music-icon').innerText = '🎵';
-                document.getElementById('music-text').innerText = 'Play Song';
-            } else {
-                audio.play();
-                isPlaying = true;
-                document.getElementById('music-icon').innerText = '🎶';
-                document.getElementById('music-text').innerText = 'Playing';
-            }
         }
 
         function heartFallback() {
