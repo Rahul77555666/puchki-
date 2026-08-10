@@ -97,6 +97,11 @@
         <source src="song.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Sound Effect for Tannu Uthayegi Click -->
+    <audio id="click-sound" preload="auto">
+        <source src="audio.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- Floating Music Toggle Button -->
     <div class="fixed top-4 right-4 z-50">
         <button id="music-btn" onclick="toggleMusic()" class="flex items-center gap-2 px-3 py-1.5 bg-slate-900/80 border border-pink-500/30 text-pink-400 rounded-full text-xs font-semibold backdrop-blur-md shadow-lg music-pulse transition-all">
@@ -252,7 +257,8 @@
             </div>
 
             <div class="flex flex-row items-center justify-center gap-6 w-full relative min-h-[80px]" id="payment-buttons">
-                <button onclick="goToInterface(6)" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition-all z-10">
+                <!-- Tannu Uthayegi triggers audio.mp3 on click -->
+                <button onclick="playTannuSound(); goToInterface(6)" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition-all z-10">
                     Tannu Uthayegi 💅
                 </button>
                 <button id="rahul-btn" onmouseover="runAway('rahul-btn')" onclick="runAway('rahul-btn')" ontouchstart="runAway('rahul-btn')" class="runaway-btn px-6 py-3 bg-slate-800 text-slate-300 font-bold rounded-xl border border-slate-700">
@@ -307,7 +313,6 @@
                     <p class="text-sm text-emerald-400 font-bold">Pay $1000 to book your date! 💳</p>
                     <div class="flex justify-center pt-1">
                         <div class="bg-white p-3 rounded-xl border-2 border-emerald-500 shadow-lg">
-                            <!-- Loads your uploaded qr.jpeg image directly -->
                             <img src="qr.jpeg" alt="PhonePe QR Code" class="w-40 h-40 object-contain" onerror="this.onerror=null;this.replaceWith(heartFallback());">
                         </div>
                     </div>
@@ -353,9 +358,13 @@
                 isPlaying = true;
                 document.getElementById('music-icon').innerText = '🎶';
                 document.getElementById('music-text').innerText = 'Playing';
-            }).catch(() => {
-                // Autoplay restriction fallback
-            });
+            }).catch(() => {});
+        }
+
+        function playTannuSound() {
+            const clickSound = document.getElementById('click-sound');
+            clickSound.currentTime = 0;
+            clickSound.play().catch(() => {});
         }
 
         function toggleMusic() {
