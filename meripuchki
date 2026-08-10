@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Puchki ✨</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Sacramento&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .cursive {
+            font-family: 'Sacramento', cursive;
+        }
+
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .heart-particle {
+            position: fixed;
+            pointer-events: none;
+            animation: floatUp 4s linear forwards;
+            opacity: 0.8;
+            z-index: 50;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.8); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 relative">
+
+    <!-- Background Glow -->
+    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="fixed bottom-1/4 left-1/2 -translate-x-1/2 translate-y-1/2 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-md glass rounded-3xl p-6 shadow-2xl relative z-10 my-8">
+        
+        <!-- Header -->
+        <header class="text-center mb-6">
+            <span class="inline-block px-3 py-1 bg-pink-500/10 text-pink-400 rounded-full text-xs font-semibold tracking-wider uppercase mb-2">Exclusive Invitation</span>
+            <h1 class="text-3xl font-extrabold text-white">Hey <span class="text-pink-500">Tannu</span> ❤️</h1>
+            <p class="text-slate-400 text-sm mt-1">AKA My <span class="cursive text-xl text-pink-400">Puchki</span></p>
+        </header>
+
+        <!-- Interactive Form Section -->
+        <div id="interactive-card" class="space-y-6">
+            
+            <!-- Step 1: Vibe Selection -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">1. Select Date Vibe</label>
+                <div class="grid grid-cols-2 gap-3" id="vibe-options">
+                    <button onclick="selectOption('vibe', 'Cozy & Chill', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <div class="text-lg">☕</div>
+                        <div class="text-sm font-semibold text-white">Cozy & Chill</div>
+                        <div class="text-xs text-slate-400">Cafe, talks & relaxation</div>
+                    </button>
+                    <button onclick="selectOption('vibe', 'Adventure Mode', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <div class="text-lg">🗺️</div>
+                        <div class="text-sm font-semibold text-white">Adventure</div>
+                        <div class="text-xs text-slate-400">Exploring new spots</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Food Preference -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">2. What are we eating, Puchki?</label>
+                <div class="grid grid-cols-2 gap-3" id="food-options">
+                    <button onclick="selectOption('food', 'Street Food Crawl', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <div class="text-lg">🍕</div>
+                        <div class="text-sm font-semibold text-white">Street Eats</div>
+                        <div class="text-xs text-slate-400">Fast food & spicy snacks</div>
+                    </button>
+                    <button onclick="selectOption('food', 'Fancy Dinner Date', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <div class="text-lg">🍝</div>
+                        <div class="text-sm font-semibold text-white">Fine Dining</div>
+                        <div class="text-xs text-slate-400">Good food & aesthetic vibes</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Ending Activity -->
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">3. The Finale</label>
+                <div class="grid grid-cols-2 gap-3" id="activity-options">
+                    <button onclick="selectOption('activity', 'Late Night Drive', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <div class="text-lg">🚗</div>
+                        <div class="text-sm font-semibold text-white">Long Drive</div>
+                        <div class="text-xs text-slate-400">Music & night lights</div>
+                    </button>
+                    <button onclick="selectOption('activity', 'Dessert & Stargazing', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <div class="text-lg">🍦</div>
+                        <div class="text-sm font-semibold text-white">Dessert Run</div>
+                        <div class="text-xs text-slate-400">Ice cream & midnight talks</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button id="submit-btn" onclick="generateTicket()" disabled class="w-full py-3.5 bg-slate-700 text-slate-400 font-bold rounded-xl transition-all shadow-lg cursor-not-allowed">
+                Lock In Choices 🔒
+            </button>
+        </div>
+
+        <!-- Output Section (Hidden by Default) -->
+        <div id="ticket-card" class="hidden space-y-6 fade-in">
+            
+            <!-- Pass Header -->
+            <div class="border-2 border-dashed border-pink-500/40 rounded-2xl p-4 bg-pink-500/5 relative">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-pink-400 font-semibold">VIP Pass Issued To</span>
+                        <h2 class="text-2xl font-bold text-white">Tannu <span class="text-sm text-slate-400">(Puchki)</span></h2>
+                    </div>
+                    <span class="px-2.5 py-1 bg-emerald-500/20 text-emerald-400 text-xs rounded-full font-bold">CONFIRMED</span>
+                </div>
+
+                <div class="space-y-2 text-sm border-t border-slate-700/60 pt-3">
+                    <div class="flex justify-between"><span class="text-slate-400">Date Vibe:</span> <span id="res-vibe" class="font-semibold text-white"></span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Menu Plan:</span> <span id="res-food" class="font-semibold text-white"></span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">The Finale:</span> <span id="res-activity" class="font-semibold text-white"></span></div>
+                </div>
+            </div>
+
+            <!-- Photo Gallery Section -->
+            <div>
+                <h3 class="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3 text-center">Our Memories Gallery 📸</h3>
+                
+                <!-- Replace 'photo1.jpg' through 'photo5.jpg' with your actual photo file names -->
+                <div class="grid grid-cols-3 gap-2">
+                    <img src="photo1.jpg" alt="Memory 1" class="rounded-lg object-cover h-24 w-full border border-slate-700 hover:scale-105 transition-all">
+                    <img src="photo2.jpg" alt="Memory 2" class="rounded-lg object-cover h-24 w-full border border-slate-700 hover:scale-105 transition-all">
+                    <img src="photo3.jpg" alt="Memory 3" class="rounded-lg object-cover h-24 w-full border border-slate-700 hover:scale-105 transition-all">
+                </div>
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <img src="photo4.jpg" alt="Memory 4" class="rounded-lg object-cover h-28 w-full border border-slate-700 hover:scale-105 transition-all">
+                    <img src="photo5.jpg" alt="Memory 5" class="rounded-lg object-cover h-28 w-full border border-slate-700 hover:scale-105 transition-all">
+                </div>
+            </div>
+
+            <p class="text-center text-xs text-slate-400 cursive text-lg">Can't wait for our date, Puchki! ❤️</p>
+        </div>
+
+    </main>
+
+    <!-- Logic Engine -->
+    <script>
+        const selections = { vibe: null, food: null, activity: null };
+
+        function selectOption(category, value, btnElement) {
+            selections[category] = value;
+
+            // Visual feedback for selected button
+            const parent = btnElement.parentElement;
+            parent.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('border-pink-500', 'bg-pink-500/10');
+                btn.classList.add('border-slate-700', 'bg-slate-800/50');
+            });
+            btnElement.classList.remove('border-slate-700', 'bg-slate-800/50');
+            btnElement.classList.add('border-pink-500', 'bg-pink-500/10');
+
+            // Spawn floating heart
+            createHeart(btnElement);
+
+            // Enable submit if all selected
+            if (selections.vibe && selections.food && selections.activity) {
+                const submitBtn = document.getElementById('submit-btn');
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('bg-slate-700', 'text-slate-400', 'cursor-not-allowed');
+                submitBtn.classList.add('bg-pink-600', 'hover:bg-pink-500', 'text-white', 'shadow-pink-500/25');
+                submitBtn.innerText = "Lock In Our Date! ✨";
+            }
+        }
+
+        function createHeart(element) {
+            const rect = element.getBoundingClientRect();
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            heart.innerHTML = '❤️';
+            heart.style.left = `${rect.left + rect.width / 2}px`;
+            heart.style.top = `${rect.top}px`;
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 4000);
+        }
+
+        function generateTicket() {
+            // Populate Ticket Details
+            document.getElementById('res-vibe').innerText = selections.vibe;
+            document.getElementById('res-food').innerText = selections.food;
+            document.getElementById('res-activity').innerText = selections.activity;
+
+            // Switch UI views
+            document.getElementById('interactive-card').classList.add('hidden');
+            document.getElementById('ticket-card').classList.remove('hidden');
+
+            // Trigger Confetti
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+    </script>
+</body>
+</html>
