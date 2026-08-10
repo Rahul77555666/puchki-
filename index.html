@@ -77,11 +77,12 @@
             <h2 class="text-xl font-bold text-white">Kya bolti Puchki, Date pe chalegi mere saath? 🥺</h2>
             
             <div class="h-48 bg-slate-950 border border-slate-700/80 rounded-2xl p-2 flex items-center justify-center">
-                <img src="photo1.jpeg?v=9" alt="Memory 1" class="max-h-full max-w-full object-contain rounded-xl">
+                <img src="photo1.jpeg?v=10" alt="Memory 1" class="max-h-full max-w-full object-contain rounded-xl">
             </div>
 
             <div class="flex flex-row items-center justify-center gap-6 w-full relative min-h-[80px]" id="gate-buttons">
-                <button id="yes-btn" onmouseover="dodgeOnce('yes-btn')" onclick="goToInterface(2)" class="runaway-btn px-8 py-3 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-lg shadow-pink-500/25 transition-all">
+                <!-- HAAN BILKUL button is now 100% stationary -->
+                <button onclick="goToInterface(2)" class="px-8 py-3 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-lg shadow-pink-500/25 transition-all z-10">
                     HAAN BILKUL! 💖
                 </button>
                 <button id="no-btn" onmouseover="runAway('no-btn')" onclick="runAway('no-btn')" class="runaway-btn px-8 py-3 bg-slate-800 text-slate-300 font-bold rounded-xl border border-slate-700">
@@ -93,7 +94,7 @@
         <!-- INTERFACE 2: Step 1 Vibe Selection (Features Photo 2) -->
         <div id="interface-2" class="hidden space-y-6 py-2 fade-in">
             <div class="h-48 bg-slate-950 border border-slate-700/80 rounded-2xl p-2 flex items-center justify-center">
-                <img src="photo2.jpeg?v=9" alt="Memory 2" class="max-h-full max-w-full object-contain rounded-xl">
+                <img src="photo2.jpeg?v=10" alt="Memory 2" class="max-h-full max-w-full object-contain rounded-xl">
             </div>
 
             <div>
@@ -120,7 +121,7 @@
         <!-- INTERFACE 3: Step 2 Food Selection (Features Photo 4) -->
         <div id="interface-3" class="hidden space-y-6 py-2 fade-in">
             <div class="h-48 bg-slate-950 border border-slate-700/80 rounded-2xl p-2 flex items-center justify-center">
-                <img src="photo4.jpeg?v=9" alt="Memory 4" class="max-h-full max-w-full object-contain rounded-xl">
+                <img src="photo4.jpeg?v=10" alt="Memory 4" class="max-h-full max-w-full object-contain rounded-xl">
             </div>
 
             <div>
@@ -147,7 +148,7 @@
         <!-- INTERFACE 4: Step 3 Finale Activity (Features Photo 5) -->
         <div id="interface-4" class="hidden space-y-6 py-2 fade-in">
             <div class="h-48 bg-slate-950 border border-slate-700/80 rounded-2xl p-2 flex items-center justify-center">
-                <img src="photo5.jpeg?v=9" alt="Memory 5" class="max-h-full max-w-full object-contain rounded-xl">
+                <img src="photo5.jpeg?v=10" alt="Memory 5" class="max-h-full max-w-full object-contain rounded-xl">
             </div>
 
             <div>
@@ -166,8 +167,9 @@
                 </div>
             </div>
 
+            <!-- Button text changed to Final Step -->
             <button id="next-4-btn" onclick="goToInterface(5)" disabled class="w-full py-3.5 bg-slate-800 text-slate-500 font-bold rounded-xl transition-all shadow-lg cursor-not-allowed">
-                Payment Par Chalo ➡️
+                Final Step ➡️
             </button>
         </div>
 
@@ -175,7 +177,7 @@
         <div id="interface-5" class="hidden text-center space-y-6 py-4 fade-in relative min-h-[280px] flex flex-col justify-center items-center">
             
             <div class="w-32 h-32 rounded-2xl overflow-hidden border-2 border-emerald-500/50 bg-slate-950 p-1 mb-2 shadow-lg flex items-center justify-center">
-                <img src="photo1.jpeg?v=9" alt="Payment Memory" class="max-h-full max-w-full object-contain rounded-xl">
+                <img src="photo1.jpeg?v=10" alt="Payment Memory" class="max-h-full max-w-full object-contain rounded-xl">
             </div>
 
             <div>
@@ -239,18 +241,18 @@
                 
                 <div class="grid grid-cols-2 gap-2">
                     <div class="h-32 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo1.jpeg?v=9" alt="Memory 1" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo1.jpeg?v=10" alt="Memory 1" class="max-h-full max-w-full object-contain rounded">
                     </div>
                     <div class="h-32 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo2.jpeg?v=9" alt="Memory 2" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo2.jpeg?v=10" alt="Memory 2" class="max-h-full max-w-full object-contain rounded">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2 mt-2">
                     <div class="h-32 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo4.jpeg?v=9" alt="Memory 4" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo4.jpeg?v=10" alt="Memory 4" class="max-h-full max-w-full object-contain rounded">
                     </div>
                     <div class="h-32 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo5.jpeg?v=9" alt="Memory 5" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo5.jpeg?v=10" alt="Memory 5" class="max-h-full max-w-full object-contain rounded">
                     </div>
                 </div>
             </div>
@@ -263,7 +265,6 @@
     <!-- Logic Engine -->
     <script>
         const selections = { vibe: null, food: null, activity: null };
-        let yesDodged = false;
 
         function goToInterface(interfaceNum) {
             for (let i = 1; i <= 6; i++) {
@@ -295,14 +296,6 @@
             const x = Math.floor(Math.random() * 220) - 110;
             const y = Math.floor(Math.random() * 120) - 60;
             btn.style.transform = `translate(${x}px, ${y}px)`;
-        }
-
-        // YES button dodges once on hover to prank her
-        function dodgeOnce(buttonId) {
-            if (!yesDodged) {
-                runAway(buttonId);
-                yesDodged = true;
-            }
         }
 
         function selectOption(category, value, btnElement) {
