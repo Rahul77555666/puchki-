@@ -80,7 +80,6 @@
             animation: spin 0.8s linear infinite;
         }
 
-        /* Pulse animation for music button */
         .music-pulse {
             animation: musicPulse 1.5s infinite;
         }
@@ -223,11 +222,10 @@
                         <div class="text-sm font-semibold text-white">Long Drive</div>
                         <div class="text-xs text-slate-400">Gaana aur night drive</div>
                     </button>
-                    <!-- Updated Flirty Option -->
+                    <!-- Subtext removed -->
                     <button onclick="selectOption('activity', 'Lipta Lipti Karengen 🫂🙈', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
                         <div class="text-lg">🫂🙈</div>
                         <div class="text-sm font-semibold text-white">Lipta Lipti</div>
-                        <div class="text-xs text-slate-400">Bohot saara pyaar aur hamesha saath</div>
                     </button>
                 </div>
             </div>
@@ -264,7 +262,7 @@
             </div>
         </div>
 
-        <!-- INTERFACE 6: VIP Pass & Fake Payment Prank -->
+        <!-- INTERFACE 6: VIP Pass & Payment Prank + Original QR Code -->
         <div id="interface-6" class="hidden space-y-6 fade-in">
 
             <!-- Pass Header -->
@@ -305,11 +303,21 @@
                     <p class="text-sm text-emerald-300 mt-3 font-semibold">Processing payment...</p>
                 </div>
 
-                <!-- Stage 3: reveal -->
-                <div id="pay-stage-3" class="hidden">
+                <!-- Stage 3: reveal & Original PhonePe QR Code -->
+                <div id="pay-stage-3" class="hidden space-y-4">
                     <div class="text-3xl mb-1">😘</div>
                     <p class="text-lg font-extrabold text-white">Just Kidding, Puchki!</p>
                     <p class="text-sm text-slate-300 mt-1">Ye sab ek prank tha — dinner is on me. Bas tu date pe chal! ❤️</p>
+                    
+                    <!-- Original QR Code for 6287148397@ybl -->
+                    <div class="pt-3 border-t border-emerald-500/20">
+                        <p class="text-xs text-emerald-400 font-semibold mb-2">Par agar fir bhi pay karna chahe to scanner ye raha: 📲</p>
+                        <div class="flex justify-center">
+                            <div class="bg-white p-3 rounded-xl border-2 border-emerald-500 shadow-lg">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=6287148397@ybl%26pn=Rahul%26am=100%26cu=USD" alt="PhonePe QR Code" class="w-36 h-36">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -352,7 +360,7 @@
                 document.getElementById('music-icon').innerText = '🎶';
                 document.getElementById('music-text').innerText = 'Playing';
             }).catch(() => {
-                // Browser blocked autoplay
+                // Autoplay restriction fallback
             });
         }
 
