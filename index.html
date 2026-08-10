@@ -72,14 +72,6 @@
             background: #ec4899;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .spinner {
-            animation: spin 0.8s linear infinite;
-        }
-
         .music-pulse {
             animation: musicPulse 1.5s infinite;
         }
@@ -124,7 +116,7 @@
             <p class="text-slate-400 text-sm mt-1">AKA Meri <span class="cursive text-xl text-pink-400">Puchki</span></p>
         </header>
 
-        <!-- Progress Dots (shown for steps 2-4 only) -->
+        <!-- Progress Dots -->
         <div id="progress-dots" class="hidden justify-center gap-2 mb-5">
             <div class="step-dot" data-step="2"></div>
             <div class="step-dot" data-step="3"></div>
@@ -257,7 +249,6 @@
             </div>
 
             <div class="flex flex-row items-center justify-center gap-6 w-full relative min-h-[80px]" id="payment-buttons">
-                <!-- Tannu Uthayegi triggers audio.mp3 on click -->
                 <button onclick="playTannuSound(); goToInterface(6)" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition-all z-10">
                     Tannu Uthayegi 💅
                 </button>
@@ -267,7 +258,7 @@
             </div>
         </div>
 
-        <!-- INTERFACE 6: VIP Pass & Uploaded PhonePe QR Code -->
+        <!-- INTERFACE 6: VIP Pass & Large Direct QR Code -->
         <div id="interface-6" class="hidden space-y-6 fade-in">
 
             <!-- Pass Header -->
@@ -287,37 +278,20 @@
                 </div>
             </div>
 
-            <!-- Payment Box with Uploaded QR Image -->
-            <div id="payment-box" class="border border-emerald-500/30 bg-emerald-950/20 rounded-2xl p-4 text-center space-y-3">
-
-                <!-- Stage 1: Initial Payment Option -->
-                <div id="pay-stage-1">
+            <!-- Direct Large PhonePe QR Code Box -->
+            <div id="payment-box" class="border border-emerald-500/30 bg-emerald-950/20 rounded-2xl p-5 text-center space-y-4">
+                <div>
                     <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Payment Due</span>
-                    <p class="text-xs text-slate-300 mt-1">Aisa tai hua tha ki Puchki kharcha uthayegi! 😉</p>
-                    <div class="text-3xl font-extrabold text-emerald-400 mt-2">$1000 <span class="text-xs text-slate-400 font-normal">USD</span></div>
-                    <button onclick="startFakePayment()" class="mt-3 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition-all text-sm">
-                        Pay Now 💳
-                    </button>
+                    <p class="text-sm text-emerald-300 font-bold mt-1">Pay $1000 to book your date! 💳</p>
                 </div>
 
-                <!-- Stage 2: Processing Spinner -->
-                <div id="pay-stage-2" class="hidden py-4">
-                    <svg class="spinner mx-auto" width="36" height="36" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="10" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-dasharray="45 20"/>
-                    </svg>
-                    <p class="text-sm text-emerald-300 mt-3 font-semibold">Generating QR Code...</p>
-                </div>
-
-                <!-- Stage 3: Display Uploaded QR Code -->
-                <div id="pay-stage-3" class="hidden space-y-3">
-                    <p class="text-sm text-emerald-400 font-bold">Pay $1000 to book your date! 💳</p>
-                    <div class="flex justify-center pt-1">
-                        <div class="bg-white p-3 rounded-xl border-2 border-emerald-500 shadow-lg">
-                            <img src="qr.jpeg" alt="PhonePe QR Code" class="w-40 h-40 object-contain" onerror="this.onerror=null;this.replaceWith(heartFallback());">
-                        </div>
+                <!-- Large QR Code Display -->
+                <div class="flex justify-center pt-1">
+                    <div class="bg-white p-4 rounded-2xl border-2 border-emerald-500 shadow-xl">
+                        <img src="qr.jpeg" alt="PhonePe QR Code" class="w-64 h-64 object-contain mx-auto" onerror="this.onerror=null;this.replaceWith(heartFallback());">
                     </div>
-                    <p class="text-[10px] text-slate-400">Scan via PhonePe / GPay / PayTM to confirm date! 📲</p>
                 </div>
+                <p class="text-xs text-slate-400">Scan via PhonePe / GPay / PayTM to confirm date! 📲</p>
             </div>
 
             <!-- Photo Gallery Grid -->
@@ -487,21 +461,6 @@
             document.body.appendChild(heart);
 
             setTimeout(() => heart.remove(), 4000);
-        }
-
-        function startFakePayment() {
-            document.getElementById('pay-stage-1').classList.add('hidden');
-            document.getElementById('pay-stage-2').classList.remove('hidden');
-
-            setTimeout(() => {
-                document.getElementById('pay-stage-2').classList.add('hidden');
-                document.getElementById('pay-stage-3').classList.remove('hidden');
-                confetti({
-                    particleCount: 100,
-                    spread: 90,
-                    origin: { y: 0.6 }
-                });
-            }, 1800);
         }
     </script>
 </body>
