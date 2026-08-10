@@ -15,7 +15,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #0b0f19;
             color: #f8fafc;
-            overflow-x: hidden;
+            min-height: 100vh;
         }
 
         .cursive {
@@ -56,7 +56,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
+<body class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-y-auto">
 
     <!-- Background Ambient Glow -->
     <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-pink-600/15 rounded-full blur-[120px] pointer-events-none"></div>
@@ -76,11 +76,11 @@
         <div id="interface-1" class="text-center space-y-6 py-4 fade-in">
             <h2 class="text-xl font-bold text-white">Wanna go on a date with me? 🥺</h2>
             
-            <!-- Photo Memory Reel Preview (Uncropped) -->
+            <!-- Photo Memory Reel Preview -->
             <div class="flex gap-2 overflow-x-auto py-2 px-1 rounded-2xl bg-slate-900/60 border border-slate-800">
-                <img src="photo1.jpeg?v=6" class="w-24 h-32 object-contain bg-slate-950 rounded-xl border border-slate-700 flex-shrink-0">
-                <img src="photo2.jpeg?v=6" class="w-24 h-32 object-contain bg-slate-950 rounded-xl border border-slate-700 flex-shrink-0">
-                <img src="photo3.jpeg?v=6" class="w-24 h-32 object-contain bg-slate-950 rounded-xl border border-slate-700 flex-shrink-0">
+                <img src="photo1.jpeg?v=7" class="w-24 h-32 object-contain bg-slate-950 rounded-xl border border-slate-700 flex-shrink-0">
+                <img src="photo2.jpeg?v=7" class="w-24 h-32 object-contain bg-slate-950 rounded-xl border border-slate-700 flex-shrink-0">
+                <img src="photo3.jpeg?v=7" class="w-24 h-32 object-contain bg-slate-950 rounded-xl border border-slate-700 flex-shrink-0">
             </div>
 
             <div class="flex flex-row items-center justify-center gap-6 w-full relative min-h-[80px]" id="gate-buttons">
@@ -98,7 +98,7 @@
             
             <!-- Dynamic Uncropped Memory Banner -->
             <div class="relative h-48 rounded-2xl overflow-hidden border border-slate-700/80 bg-slate-950/80 p-2 flex items-center justify-center">
-                <img id="planner-preview-img" src="photo4.jpeg?v=6" alt="Our Memory" class="max-h-full max-w-full object-contain rounded-lg">
+                <img id="planner-preview-img" src="photo4.jpeg?v=7" alt="Our Memory" class="max-h-full max-w-full object-contain rounded-lg">
                 <div class="absolute bottom-2 left-2 right-2 bg-slate-950/80 backdrop-blur-md rounded-lg p-2 border border-slate-800 text-center">
                     <span class="text-xs font-semibold text-pink-300">Planning Our Next Memory ✨</span>
                 </div>
@@ -109,12 +109,12 @@
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">1. Select Date Vibe</label>
                     <div class="grid grid-cols-2 gap-3">
-                        <button onclick="selectOption('vibe', 'Cozy & Chill', this, 'photo1.jpeg?v=6')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <button onclick="selectOption('vibe', 'Cozy & Chill', this, 'photo1.jpeg?v=7')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
                             <div class="text-lg">☕</div>
                             <div class="text-sm font-semibold text-white">Cozy & Chill</div>
                             <div class="text-xs text-slate-400">Cafe & talks</div>
                         </button>
-                        <button onclick="selectOption('vibe', 'Adventure Mode', this, 'photo2.jpeg?v=6')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <button onclick="selectOption('vibe', 'Adventure Mode', this, 'photo2.jpeg?v=7')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
                             <div class="text-lg">🗺️</div>
                             <div class="text-sm font-semibold text-white">Adventure</div>
                             <div class="text-xs text-slate-400">Exploring spots</div>
@@ -125,12 +125,12 @@
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">2. What are we eating, Puchki?</label>
                     <div class="grid grid-cols-2 gap-3">
-                        <button onclick="selectOption('food', 'Street Food Crawl', this, 'photo3.jpeg?v=6')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <button onclick="selectOption('food', 'Street Food Crawl', this, 'photo3.jpeg?v=7')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
                             <div class="text-lg">🍕</div>
                             <div class="text-sm font-semibold text-white">Street Eats</div>
                             <div class="text-xs text-slate-400">Spicy fast food</div>
                         </button>
-                        <button onclick="selectOption('food', 'Fancy Dinner Date', this, 'photo4.jpeg?v=6')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <button onclick="selectOption('food', 'Fancy Dinner Date', this, 'photo4.jpeg?v=7')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
                             <div class="text-lg">🍝</div>
                             <div class="text-sm font-semibold text-white">Fine Dining</div>
                             <div class="text-xs text-slate-400">Aesthetic dinner</div>
@@ -141,12 +141,12 @@
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">3. The Finale</label>
                     <div class="grid grid-cols-2 gap-3">
-                        <button onclick="selectOption('activity', 'Late Night Drive', this, 'photo5.jpeg?v=6')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <button onclick="selectOption('activity', 'Late Night Drive', this, 'photo5.jpeg?v=7')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
                             <div class="text-lg">🚗</div>
                             <div class="text-sm font-semibold text-white">Long Drive</div>
                             <div class="text-xs text-slate-400">Music & lights</div>
                         </button>
-                        <button onclick="selectOption('activity', 'Dessert & Stargazing', this, 'photo1.jpeg?v=6')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <button onclick="selectOption('activity', 'Dessert & Stargazing', this, 'photo1.jpeg?v=7')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
                             <div class="text-lg">🍦</div>
                             <div class="text-sm font-semibold text-white">Dessert Run</div>
                             <div class="text-xs text-slate-400">Ice cream talks</div>
@@ -164,7 +164,7 @@
         <div id="interface-3" class="hidden text-center space-y-6 py-4 fade-in relative min-h-[260px] flex flex-col justify-center items-center">
             
             <div class="w-28 h-28 rounded-2xl overflow-hidden border-2 border-emerald-500/50 bg-slate-950 p-1 mb-2 shadow-lg flex items-center justify-center">
-                <img src="photo5.jpeg?v=6" alt="Payment Memory" class="max-h-full max-w-full object-contain rounded-xl">
+                <img src="photo5.jpeg?v=7" alt="Payment Memory" class="max-h-full max-w-full object-contain rounded-xl">
             </div>
 
             <div>
@@ -220,27 +220,27 @@
                 <p class="text-[10px] text-slate-400">Scan via PhonePe / GPay / PayTM to confirm our date! 📲</p>
             </div>
 
-            <!-- Photo Gallery Grid (Uncropped full aspect preview) -->
+            <!-- Photo Gallery Grid -->
             <div>
                 <h3 class="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3 text-center">Our Memories Gallery 📸</h3>
                 
                 <div class="grid grid-cols-3 gap-2">
                     <div class="h-28 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo1.jpeg?v=6" alt="Memory 1" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo1.jpeg?v=7" alt="Memory 1" class="max-h-full max-w-full object-contain rounded">
                     </div>
                     <div class="h-28 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo2.jpeg?v=6" alt="Memory 2" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo2.jpeg?v=7" alt="Memory 2" class="max-h-full max-w-full object-contain rounded">
                     </div>
                     <div class="h-28 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo3.jpeg?v=6" alt="Memory 3" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo3.jpeg?v=7" alt="Memory 3" class="max-h-full max-w-full object-contain rounded">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2 mt-2">
                     <div class="h-32 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo4.jpeg?v=6" alt="Memory 4" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo4.jpeg?v=7" alt="Memory 4" class="max-h-full max-w-full object-contain rounded">
                     </div>
                     <div class="h-32 bg-slate-950 border border-slate-700 rounded-lg p-1 flex items-center justify-center">
-                        <img src="photo5.jpeg?v=6" alt="Memory 5" class="max-h-full max-w-full object-contain rounded">
+                        <img src="photo5.jpeg?v=7" alt="Memory 5" class="max-h-full max-w-full object-contain rounded">
                     </div>
                 </div>
             </div>
@@ -260,6 +260,9 @@
             }
 
             document.getElementById(`interface-${interfaceNum}`).classList.remove('hidden');
+
+            // Auto-scroll to top of main card when advancing
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
             if (interfaceNum === 4) {
                 document.getElementById('res-vibe').innerText = selections.vibe;
