@@ -3,228 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Puchki ✨</title>
+    <title>For My Puchki ✨</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Gsap Animation CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <!-- Canvas Confetti CDN -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Sacramento&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Sacramento&display=swap');
         
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
-            overflow-x: hidden;
+            font-family: 'Unbounded', sans-serif;
+            background-color: #0d1117;
+            color: #e6edf3;
+            overflow: hidden; /* Prevent scrolling for the full-screen vibe */
         }
 
         .cursive {
             font-family: 'Sacramento', cursive;
+            font-weight: 400;
         }
 
-        .glass {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .neo-glass {
+            background: rgba(13, 17, 23, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
 
-        .heart-particle {
-            position: fixed;
-            pointer-events: none;
-            animation: floatUp 4s linear forwards;
-            opacity: 0.8;
-            z-index: 50;
+        /* Swiping Card Styling */
+        .card-container {
+            perspective: 1000px;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(0) scale(0.8); opacity: 1; }
-            100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+        .swipe-card {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 2rem;
+            cursor: grab;
+            transform-origin: 50% 100%;
+            transition: transform 0.1s ease;
+            z-index: 10;
         }
 
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out forwards;
+        .swipe-card.dragging {
+            cursor: grabbing;
+            transition: none;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Vibe Pulsing Glow */
+        .pulse-heart {
+            animation: pulse-red 2s infinite;
         }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* Ticket Background Wave */
+        .wave-bg {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            position: relative;
+        }
+        .wave-bg::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ef4444' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm0-10v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm0-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm0-10v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm0-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm0-10v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm0-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm0-10v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm0-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm0-10v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm10 0v-9h-9v9h9zm0-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 relative">
+<body class="min-h-screen flex flex-col justify-between relative p-4 pb-8">
 
-    <!-- Background Glow -->
-    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="fixed bottom-1/4 left-1/2 -translate-x-1/2 translate-y-1/2 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Background Decorative Gradients -->
+    <div class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-0">
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-red-900/40 rounded-full blur-[100px]"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px]"></div>
+        <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-red-950/50 rounded-full blur-[100px]"></div>
+    </div>
 
-    <!-- Main Container -->
-    <main class="w-full max-w-md glass rounded-3xl p-6 shadow-2xl relative z-10 my-8">
+    <!-- Header (Stays fixed) -->
+    <header class="text-center pt-6 relative z-30">
+        <div class="inline-flex gap-2 items-center px-4 py-1.5 neo-glass rounded-full border border-red-900/50 pulse-heart">
+            <span class="text-xs text-red-400 font-bold uppercase tracking-widest">Date Vibe Check</span>
+            <span class="w-2 h-2 rounded-full bg-red-500"></span>
+        </div>
+        <h1 class="text-3xl font-black mt-3 text-white">Hey <span class="text-red-500">Tannu!</span> ❤️</h1>
+        <p class="text-slate-400 text-sm mt-1">Ready to design our perfect date, <span class="cursive text-xl text-red-400">Puchki?</span></p>
+    </header>
+
+    <!-- Main Swiping Area -->
+    <main id="app-container" class="flex-grow flex items-center justify-center relative z-20 my-10 card-container w-full max-w-sm mx-auto h-[450px]">
         
-        <!-- Header -->
-        <header class="text-center mb-6">
-            <span class="inline-block px-3 py-1 bg-pink-500/10 text-pink-400 rounded-full text-xs font-semibold tracking-wider uppercase mb-2">Exclusive Invitation</span>
-            <h1 class="text-3xl font-extrabold text-white">Hey <span class="text-pink-500">Tannu</span> ❤️</h1>
-            <p class="text-slate-400 text-sm mt-1">AKA My <span class="cursive text-xl text-pink-400">Puchki</span></p>
-        </header>
-
-        <!-- Interactive Form Section -->
-        <div id="interactive-card" class="space-y-6">
-            
-            <!-- Step 1: Vibe Selection -->
+        <!-- Complete/Ticket Card (Hidden Initially) -->
+        <div id="ticket-card" class="hidden absolute top-0 left-0 w-full h-full neo-glass rounded-[2rem] p-8 wave-bg border-2 border-red-500/40 shadow-2xl shadow-red-950/30 flex flex-col justify-between z-0">
             <div>
-                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">1. Select Date Vibe</label>
-                <div class="grid grid-cols-2 gap-3" id="vibe-options">
-                    <button onclick="selectOption('vibe', 'Cozy & Chill', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">☕</div>
-                        <div class="text-sm font-semibold text-white">Cozy & Chill</div>
-                        <div class="text-xs text-slate-400">Cafe, talks & relaxation</div>
-                    </button>
-                    <button onclick="selectOption('vibe', 'Adventure Mode', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">🗺️</div>
-                        <div class="text-sm font-semibold text-white">Adventure</div>
-                        <div class="text-xs text-slate-400">Exploring new spots</div>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Step 2: Food Preference -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">2. What are we eating, Puchki?</label>
-                <div class="grid grid-cols-2 gap-3" id="food-options">
-                    <button onclick="selectOption('food', 'Street Food Crawl', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">🍕</div>
-                        <div class="text-sm font-semibold text-white">Street Eats</div>
-                        <div class="text-xs text-slate-400">Fast food & spicy snacks</div>
-                    </button>
-                    <button onclick="selectOption('food', 'Fancy Dinner Date', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">🍝</div>
-                        <div class="text-sm font-semibold text-white">Fine Dining</div>
-                        <div class="text-xs text-slate-400">Good food & aesthetic vibes</div>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Step 3: Ending Activity -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">3. The Finale</label>
-                <div class="grid grid-cols-2 gap-3" id="activity-options">
-                    <button onclick="selectOption('activity', 'Late Night Drive', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">🚗</div>
-                        <div class="text-sm font-semibold text-white">Long Drive</div>
-                        <div class="text-xs text-slate-400">Music & night lights</div>
-                    </button>
-                    <button onclick="selectOption('activity', 'Dessert & Stargazing', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">🍦</div>
-                        <div class="text-sm font-semibold text-white">Dessert Run</div>
-                        <div class="text-xs text-slate-400">Ice cream & midnight talks</div>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Submit Button -->
-            <button id="submit-btn" onclick="generateTicket()" disabled class="w-full py-3.5 bg-slate-700 text-slate-400 font-bold rounded-xl transition-all shadow-lg cursor-not-allowed">
-                Lock In Choices 🔒
-            </button>
-        </div>
-
-        <!-- Output Section (Hidden by Default) -->
-        <div id="ticket-card" class="hidden space-y-6 fade-in">
-            
-            <!-- Pass Header -->
-            <div class="border-2 border-dashed border-pink-500/40 rounded-2xl p-4 bg-pink-500/5 relative">
-                <div class="flex justify-between items-start mb-4">
+                <div class="flex justify-between items-start">
                     <div>
-                        <span class="text-xs uppercase tracking-widest text-pink-400 font-semibold">VIP Pass Issued To</span>
-                        <h2 class="text-2xl font-bold text-white">Tannu <span class="text-sm text-slate-400">(Puchki)</span></h2>
+                        <span class="text-[10px] uppercase tracking-widest text-red-400 font-black">VIP Access Pass</span>
+                        <h2 class="text-3xl font-black text-white mt-1">Puchki <span class="text-sm font-normal text-slate-500">Edition</span></h2>
                     </div>
-                    <span class="px-2.5 py-1 bg-emerald-500/20 text-emerald-400 text-xs rounded-full font-bold">CONFIRMED</span>
+                    <div class="p-2.5 bg-red-500/10 rounded-xl border border-red-900 pulse-heart">
+                        <span class="text-xl">❤️</span>
+                    </div>
                 </div>
 
-                <div class="space-y-2 text-sm border-t border-slate-700/60 pt-3">
-                    <div class="flex justify-between"><span class="text-slate-400">Date Vibe:</span> <span id="res-vibe" class="font-semibold text-white"></span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Menu Plan:</span> <span id="res-food" class="font-semibold text-white"></span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">The Finale:</span> <span id="res-activity" class="font-semibold text-white"></span></div>
+                <div class="mt-8 space-y-4 text-slate-300">
+                    <div class="flex items-center gap-3"><span class="text-xl">☕</span> <span id="res-vibe" class="font-bold text-white text-lg"></span></div>
+                    <div class="flex items-center gap-3"><span class="text-xl">🍝</span> <span id="res-food" class="font-bold text-white text-lg"></span></div>
+                    <div class="flex items-center gap-3"><span class="text-xl">🚗</span> <span id="res-activity" class="font-bold text-white text-lg"></span></div>
                 </div>
             </div>
 
-            <!-- Photo Gallery Section -->
-            <div>
-                <h3 class="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3 text-center">Our Memories Gallery 📸</h3>
-                
-                <!-- Updated image paths with .jpeg extension -->
-                <div class="grid grid-cols-3 gap-2">
-                    <img src="photo1.jpeg" alt="Memory 1" class="rounded-lg object-cover h-24 w-full border border-slate-700 hover:scale-105 transition-all">
-                    <img src="photo2.jpeg" alt="Memory 2" class="rounded-lg object-cover h-24 w-full border border-slate-700 hover:scale-105 transition-all">
-                    <img src="photo3.jpeg" alt="Memory 3" class="rounded-lg object-cover h-24 w-full border border-slate-700 hover:scale-105 transition-all">
-                </div>
-                <div class="grid grid-cols-2 gap-2 mt-2">
-                    <img src="photo4.jpeg" alt="Memory 4" class="rounded-lg object-cover h-28 w-full border border-slate-700 hover:scale-105 transition-all">
-                    <img src="photo5.jpeg" alt="Memory 5" class="rounded-lg object-cover h-28 w-full border border-slate-700 hover:scale-105 transition-all">
-                </div>
+            <!-- Photos (Update filenames to .jpeg with cache busting) -->
+            <div class="grid grid-cols-5 gap-2 mt-6">
+                <img src="photo1.jpeg?v=1" alt="Memory 1" class="rounded-lg object-cover h-14 w-full border border-slate-800">
+                <img src="photo2.jpeg?v=1" alt="Memory 2" class="rounded-lg object-cover h-14 w-full border border-slate-800">
+                <img src="photo3.jpeg?v=1" alt="Memory 3" class="rounded-lg object-cover h-14 w-full border border-slate-800">
+                <img src="photo4.jpeg?v=1" alt="Memory 4" class="rounded-lg object-cover h-14 w-full border border-slate-800">
+                <img src="photo5.jpeg?v=1" alt="Memory 5" class="rounded-lg object-cover h-14 w-full border border-slate-800">
             </div>
-
-            <p class="text-center text-xs text-slate-400 cursive text-lg">Can't wait for our date, Puchki! ❤️</p>
         </div>
 
+        <!-- Swipe Cards Stack (Populated via JS) -->
+        <div id="card-stack" class="relative w-full h-full">
+            <!-- Card 3: The Finale -->
+            <div class="swipe-card neo-glass p-8 flex flex-col justify-between border-2 border-slate-800" data-category="activity">
+                <div>
+                    <span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Step 3 of 3</span>
+                    <h3 class="text-3xl font-extrabold text-white mt-2">The <span class="text-red-500">Finale</span></h3>
+                    <p class="text-slate-400 mt-2 text-sm">Swipe LEFT for a chill drive, or RIGHT for a dessert run under the stars.</p>
+                </div>
+                <div class="flex-grow flex items-center justify-center text-[150px] my-6">🌌</div>
+                <div class="flex justify-between items-center text-xs text-slate-600 font-bold uppercase tracking-wider">
+                    <span>⬅️ Late Drive</span>
+                    <span>Dessert Run ➡️</span>
+                </div>
+            </div>
+
+            <!-- Card 2: Food -->
+            <div class="swipe-card neo-glass p-8 flex flex-col justify-between border-2 border-slate-800" data-category="food">
+                <div>
+                    <span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Step 2 of 3</span>
+                    <h3 class="text-3xl font-extrabold text-white mt-2">Hungry, <span class="text-red-500">Puchki?</span></h3>
+                    <p class="text-slate-400 mt-2 text-sm">Swipe LEFT for casual street food, or RIGHT for a fancy dinner date.</p>
+                </div>
+                <div class="flex-grow flex items-center justify-center text-[150px] my-6">🍕🍝</div>
+                <div class="flex justify-between items-center text-xs text-slate-600 font-bold uppercase tracking-wider">
+                    <span>⬅️ Street Eats</span>
+                    <span>Fine Dining ➡️</span>
+                </div>
+            </div>
+
+            <!-- Card 1: Vibe (Top Card) -->
+            <div class="swipe-card neo-glass p-8 flex flex-col justify-between border-2 border-slate-800" data-category="vibe">
+                <div>
+                    <span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Step 1 of 3</span>
+                    <h3 class="text-3xl font-extrabold text-white mt-2">Pick the <span class="text-red-500">Vibe</span></h3>
+                    <p class="text-slate-400 mt-2 text-sm">Swipe LEFT for a cozy cafe chill session, or RIGHT for adventure mode.</p>
+                </div>
+                <div class="flex-grow flex items-center justify-center text-[150px] my-6">☕🗺️</div>
+                <div class="flex justify-between items-center text-xs text-slate-600 font-bold uppercase tracking-wider">
+                    <span>⬅️ Cozy Cafe</span>
+                    <span>Adventure ➡️</span>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <!-- Logic Engine -->
+    <!-- Footer Controls/Status -->
+    <footer class="w-full max-w-xs mx-auto text-center relative z-30">
+        <div id="status-text" class="text-sm font-bold text-slate-500 uppercase tracking-widest">Swipe a card to begin</div>
+        <p class="mt-4 text-xs text-slate-700 cursive text-lg">Created with ❤️ just for you</p>
+    </footer >
+
     <script>
         const selections = { vibe: null, food: null, activity: null };
+        const cards = document.querySelectorAll('.swipe-card');
+        const statusText = document.getElementById('status-text');
+        let currentCardIndex = cards.length - 1; // Start with the top card
 
-        function selectOption(category, value, btnElement) {
-            selections[category] = value;
+        // Dynamic Option Labels (matches the swipe direction)
+        const optionsMap = {
+            vibe: { left: "Cozy Cafe Chill", right: "Adventure Mode" },
+            food: { left: "Street Food Crawl", right: "Fancy Dinner Date" },
+            activity: { left: "Late Night Drive", right: "Dessert & Stargazing" }
+        };
 
-            // Visual feedback for selected button
-            const parent = btnElement.parentElement;
-            parent.querySelectorAll('.option-btn').forEach(btn => {
-                btn.classList.remove('border-pink-500', 'bg-pink-500/10');
-                btn.classList.add('border-slate-700', 'bg-slate-800/50');
+        // Initialize Cards Stacking effect
+        gsap.set(cards, { y: (i) => i * -15, scale: (i) => 1 - i * 0.05, opacity: (i) => 1 - i * 0.2 });
+
+        cards.forEach((card, index) => {
+            let startX = 0;
+            let currentX = 0;
+            let isDragging = false;
+            const category = card.dataset.category;
+
+            // Use GSAP Draggable for smooth swiping
+            card.addEventListener('mousedown', startDrag);
+            card.addEventListener('touchstart', startDrag);
+
+            function startDrag(e) {
+                if (index !== currentCardIndex) return; // Only drag the top card
+                isDragging = true;
+                startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+                card.classList.add('dragging');
+                statusText.innerText = "Deciding...";
+                statusText.classList.remove('text-slate-500');
+                statusText.classList.add('text-white');
+            }
+
+            document.addEventListener('mousemove', doDrag);
+            document.addEventListener('touchmove', doDrag);
+
+            function doDrag(e) {
+                if (!isDragging) return;
+                currentX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+                const deltaX = currentX - startX;
+                const rotation = deltaX * 0.1; // Add rotation based on drag
+
+                // Visually move the card
+                gsap.set(card, { x: deltaX, rotation: rotation });
+
+                // Update footer text based on direction
+                if (deltaX > 50) {
+                    statusText.innerText = `Pick: ${optionsMap[category].right} 👉`;
+                    statusText.classList.add('text-emerald-400');
+                    statusText.classList.remove('text-red-400');
+                } else if (deltaX < -50) {
+                    statusText.innerText = `👈 Pick: ${optionsMap[category].left}`;
+                    statusText.classList.add('text-red-400');
+                    statusText.classList.remove('text-emerald-400');
+                } else {
+                    statusText.innerText = "Deciding...";
+                    statusText.classList.remove('text-red-400', 'text-emerald-400');
+                }
+            }
+
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchend', endDrag);
+
+            function endDrag() {
+                if (!isDragging) return;
+                isDragging = false;
+                card.classList.remove('dragging');
+                const deltaX = currentX - startX;
+                const swipeThreshold = 120; // Distance needed to trigger a swipe
+
+                if (deltaX > swipeThreshold) {
+                    // Swipe Right
+                    animateOut(card, 1000, 20, optionsMap[category].right);
+                } else if (deltaX < -swipeThreshold) {
+                    // Swipe Left
+                    animateOut(card, -1000, -20, optionsMap[category].left);
+                } else {
+                    // Snap back if threshold not met
+                    gsap.to(card, { x: 0, rotation: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" });
+                    statusText.innerText = "Try again, swipe further!";
+                    statusText.classList.remove('text-red-400', 'text-emerald-400');
+                    statusText.classList.add('text-slate-500');
+                }
+            }
+        });
+
+        function animateOut(card, xTarget, rotationTarget, choiceValue) {
+            const category = card.dataset.category;
+            selections[category] = choiceValue; // Lock in choice
+
+            // Trigger Heart particles on swipe
+            createHeartExplosion(choiceValue.includes('Adventure') || choiceValue.includes('Fancy') || choiceValue.includes('Stargazing'));
+
+            gsap.to(card, {
+                x: xTarget, rotation: rotationTarget, opacity: 0, duration: 0.6, ease: "power2.in",
+                onComplete: () => {
+                    card.classList.add('hidden');
+                    currentCardIndex--;
+                    advanceStack();
+                }
             });
-            btnElement.classList.remove('border-slate-700', 'bg-slate-800/50');
-            btnElement.classList.add('border-pink-500', 'bg-pink-500/10');
+        }
 
-            // Spawn floating heart
-            createHeart(btnElement);
-
-            // Enable submit if all selected
-            if (selections.vibe && selections.food && selections.activity) {
-                const submitBtn = document.getElementById('submit-btn');
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('bg-slate-700', 'text-slate-400', 'cursor-not-allowed');
-                submitBtn.classList.add('bg-pink-600', 'hover:bg-pink-500', 'text-white', 'shadow-pink-500/25');
-                submitBtn.innerText = "Lock In Our Date! ✨";
+        function advanceStack() {
+            if (currentCardIndex >= 0) {
+                const nextCard = cards[currentCardIndex];
+                // Animate the next card into the top position
+                gsap.to(nextCard, { y: 0, scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)" });
+                statusText.innerText = `Step ${cards.length - currentCardIndex} of 3`;
+                statusText.classList.remove('text-red-400', 'text-emerald-400');
+                statusText.classList.add('text-slate-500');
+            } else {
+                // All cards swiped! Show ticket
+                showFinalTicket();
             }
         }
 
-        function createHeart(element) {
-            const rect = element.getBoundingClientRect();
-            const heart = document.createElement('div');
-            heart.classList.add('heart-particle');
-            heart.innerHTML = '❤️';
-            heart.style.left = `${rect.left + rect.width / 2}px`;
-            heart.style.top = `${rect.top}px`;
-            document.body.appendChild(heart);
-
-            setTimeout(() => heart.remove(), 4000);
-        }
-
-        function generateTicket() {
+        function showFinalTicket() {
             // Populate Ticket Details
             document.getElementById('res-vibe').innerText = selections.vibe;
             document.getElementById('res-food').innerText = selections.food;
             document.getElementById('res-activity').innerText = selections.activity;
 
-            // Switch UI views
-            document.getElementById('interactive-card').classList.add('hidden');
-            document.getElementById('ticket-card').classList.remove('hidden');
+            // Hide main container and show ticket
+            document.getElementById('card-stack').classList.add('hidden');
+            const ticket = document.getElementById('ticket-card');
+            ticket.classList.remove('hidden');
+            gsap.fromTo(ticket, {scale: 0.8, opacity: 0, y: 50}, {scale: 1, opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.2)", delay: 0.3});
 
-            // Trigger Confetti
+            statusText.innerText = "Date Locked In! 🔒";
+            statusText.classList.remove('text-slate-500');
+            statusText.classList.add('text-emerald-400');
+
+            // Trigger Massive Confetti explosion
+            triggerMassiveConfetti();
+        }
+
+        // --- Fun Particle Effects ---
+
+        function createHeartExplosion(isPositive) {
             confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
+                particleCount: 30,
+                spread: 60,
+                origin: { y: 0.7 },
+                colors: isPositive ? ['#10b981', '#ffffff'] : ['#ef4444', '#ffffff'], // Green or Red hearts
+                shapes: ['circle'],
+                gravity: 1.2
             });
+        }
+
+        function triggerMassiveConfetti() {
+            const duration = 3 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ef4444', '#ffffff', '#f87171']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ef4444', '#ffffff', '#f87171']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
         }
     </script>
 </body>
