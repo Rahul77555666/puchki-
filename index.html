@@ -258,7 +258,7 @@
             </div>
         </div>
 
-        <!-- INTERFACE 6: VIP Pass & Large Direct QR Code -->
+        <!-- INTERFACE 6: VIP Pass & Strict 1:1 Aspect Ratio QR Code -->
         <div id="interface-6" class="hidden space-y-6 fade-in">
 
             <!-- Pass Header -->
@@ -278,17 +278,17 @@
                 </div>
             </div>
 
-            <!-- Direct Large PhonePe QR Code Box -->
+            <!-- Direct PhonePe QR Code Box (Enforced 1:1 Square) -->
             <div id="payment-box" class="border border-emerald-500/30 bg-emerald-950/20 rounded-2xl p-5 text-center space-y-4">
                 <div>
                     <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Payment Due</span>
                     <p class="text-sm text-emerald-300 font-bold mt-1">Pay $1000 to book your date! 💳</p>
                 </div>
 
-                <!-- Large QR Code Display -->
+                <!-- Enforced 1:1 Aspect Ratio Container -->
                 <div class="flex justify-center pt-1">
-                    <div class="bg-white p-4 rounded-2xl border-2 border-emerald-500 shadow-xl">
-                        <img src="qr.jpeg" alt="PhonePe QR Code" class="w-64 h-64 object-contain mx-auto" onerror="this.onerror=null;this.replaceWith(heartFallback());">
+                    <div class="bg-white p-3 rounded-2xl border-2 border-emerald-500 shadow-xl w-64 h-64 aspect-square flex items-center justify-center overflow-hidden">
+                        <img src="qr.jpeg" alt="PhonePe QR Code" class="w-full h-full object-contain aspect-square" onerror="this.onerror=null;this.replaceWith(heartFallback());">
                     </div>
                 </div>
                 <p class="text-xs text-slate-400">Scan via PhonePe / GPay / PayTM to confirm date! 📲</p>
