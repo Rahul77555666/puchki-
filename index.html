@@ -79,9 +79,32 @@
         .spinner {
             animation: spin 0.8s linear infinite;
         }
+
+        /* Pulse animation for music button */
+        .music-pulse {
+            animation: musicPulse 1.5s infinite;
+        }
+        @keyframes musicPulse {
+            0% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.6); }
+            70% { box-shadow: 0 0 0 8px rgba(236, 72, 153, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-y-auto">
+
+    <!-- Background Audio Element -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating Music Toggle Button -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="music-btn" onclick="toggleMusic()" class="flex items-center gap-2 px-3 py-1.5 bg-slate-900/80 border border-pink-500/30 text-pink-400 rounded-full text-xs font-semibold backdrop-blur-md shadow-lg music-pulse transition-all">
+            <span id="music-icon">🎵</span>
+            <span id="music-text">Play Song</span>
+        </button>
+    </div>
 
     <!-- Ambient Background Glow -->
     <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-pink-600/15 rounded-full blur-[120px] pointer-events-none"></div>
@@ -113,7 +136,7 @@
             </div>
 
             <div class="flex flex-row items-center justify-center gap-6 w-full relative min-h-[80px]" id="gate-buttons">
-                <button onclick="celebrateYes(); goToInterface(2)" class="px-8 py-3 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-lg shadow-pink-500/25 transition-all z-10">
+                <button onclick="playMusicOnStart(); celebrateYes(); goToInterface(2)" class="px-8 py-3 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-lg shadow-pink-500/25 transition-all z-10">
                     HAAN BILKUL! 💖
                 </button>
                 <button id="no-btn" onmouseover="runAway('no-btn')" onclick="runAway('no-btn')" ontouchstart="runAway('no-btn')" class="runaway-btn px-8 py-3 bg-slate-800 text-slate-300 font-bold rounded-xl border border-slate-700">
@@ -200,10 +223,11 @@
                         <div class="text-sm font-semibold text-white">Long Drive</div>
                         <div class="text-xs text-slate-400">Gaana aur night drive</div>
                     </button>
-                    <button onclick="selectOption('activity', 'Ice Cream & Stargazing', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">🍦</div>
-                        <div class="text-sm font-semibold text-white">Dessert Run</div>
-                        <div class="text-xs text-slate-400">Ice cream + tare dekhna</div>
+                    <!-- Updated Flirty Option -->
+                    <button onclick="selectOption('activity', 'Lipta Lipti Karengen 🫂🙈', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                        <div class="text-lg">🫂🙈</div>
+                        <div class="text-sm font-semibold text-white">Lipta Lipti</div>
+                        <div class="text-xs text-slate-400">Bohot saara pyaar aur hamesha saath</div>
                     </button>
                 </div>
             </div>
@@ -319,6 +343,33 @@
     <!-- Logic Engine -->
     <script>
         const selections = { vibe: null, food: null, activity: null };
+        let isPlaying = false;
+
+        function playMusicOnStart() {
+            const audio = document.getElementById('bg-music');
+            audio.play().then(() => {
+                isPlaying = true;
+                document.getElementById('music-icon').innerText = '🎶';
+                document.getElementById('music-text').innerText = 'Playing';
+            }).catch(() => {
+                // Browser blocked autoplay
+            });
+        }
+
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                document.getElementById('music-icon').innerText = '🎵';
+                document.getElementById('music-text').innerText = 'Play Song';
+            } else {
+                audio.play();
+                isPlaying = true;
+                document.getElementById('music-icon').innerText = '🎶';
+                document.getElementById('music-text').innerText = 'Playing';
+            }
+        }
 
         function heartFallback() {
             const div = document.createElement('div');
@@ -374,7 +425,6 @@
             });
         }
 
-        // Dodging logic for NO and Rahul buttons
         function runAway(buttonId) {
             const btn = document.getElementById(buttonId);
             if (btn.style.position !== 'absolute') {
@@ -428,7 +478,6 @@
             setTimeout(() => heart.remove(), 4000);
         }
 
-        // Fake payment prank sequence — purely visual, no real payment happens
         function startFakePayment() {
             document.getElementById('pay-stage-1').classList.add('hidden');
             document.getElementById('pay-stage-2').classList.remove('hidden');
