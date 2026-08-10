@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0f172a;
+            background-color: #0b0f19;
             color: #f8fafc;
             overflow-x: hidden;
         }
@@ -23,9 +23,9 @@
         }
 
         .glass {
-            background: rgba(30, 41, 59, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(18, 24, 38, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .heart-particle {
@@ -51,121 +51,145 @@
         }
 
         .runaway-btn {
-            position: absolute;
-            transition: all 0.15s ease-out;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 20;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
 
-    <!-- Background Glow -->
-    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="fixed bottom-1/4 left-1/2 -translate-x-1/2 translate-y-1/2 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Background Ambient Glow -->
+    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-pink-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="fixed bottom-1/4 left-1/2 -translate-x-1/2 translate-y-1/2 w-[500px] h-[500px] bg-purple-600/15 rounded-full blur-[120px] pointer-events-none"></div>
 
-    <!-- Main Container -->
+    <!-- Main Application Window -->
     <main class="w-full max-w-md glass rounded-3xl p-6 shadow-2xl relative z-10 my-8">
         
-        <!-- Header -->
+        <!-- Persistent App Header -->
         <header class="text-center mb-6">
-            <span class="inline-block px-3 py-1 bg-pink-500/10 text-pink-400 rounded-full text-xs font-semibold tracking-wider uppercase mb-2">Exclusive Invitation</span>
+            <span class="inline-block px-3 py-1 bg-pink-500/10 text-pink-400 border border-pink-500/20 rounded-full text-[10px] font-bold tracking-widest uppercase mb-2">Exclusive Invitation</span>
             <h1 class="text-3xl font-extrabold text-white">Hey <span class="text-pink-500">Tannu</span> ❤️</h1>
             <p class="text-slate-400 text-sm mt-1">AKA My <span class="cursive text-xl text-pink-400">Puchki</span></p>
         </header>
 
-        <!-- STAGE 0: Initial Date Proposal Gate -->
-        <div id="stage-gate" class="text-center space-y-8 py-6 fade-in relative min-h-[180px]">
-            <h2 class="text-2xl font-bold text-white">Wanna go on a date with me? 🥺</h2>
-            <div class="flex justify-center items-center gap-4 relative min-h-[60px]" id="gate-buttons">
-                <button onclick="acceptDate()" class="px-8 py-3 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-lg shadow-pink-500/25 transition-all">
+        <!-- INTERFACE 1: Proposal Gate -->
+        <div id="interface-1" class="text-center space-y-6 py-4 fade-in">
+            <h2 class="text-xl font-bold text-white">Wanna go on a date with me? 🥺</h2>
+            
+            <!-- Photo Memory Reel Preview -->
+            <div class="flex gap-2 overflow-x-auto py-2 px-1 rounded-2xl bg-slate-900/40 border border-slate-800">
+                <img src="photo1.jpeg?v=5" class="w-20 h-24 object-cover rounded-xl border border-slate-700 flex-shrink-0">
+                <img src="photo2.jpeg?v=5" class="w-20 h-24 object-cover rounded-xl border border-slate-700 flex-shrink-0">
+                <img src="photo3.jpeg?v=5" class="w-20 h-24 object-cover rounded-xl border border-slate-700 flex-shrink-0">
+            </div>
+
+            <div class="flex flex-row items-center justify-center gap-6 w-full relative min-h-[80px]" id="gate-buttons">
+                <button onclick="goToInterface(2)" class="px-8 py-3 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-lg shadow-pink-500/25 transition-all z-10">
                     YES! 💖
                 </button>
-                <button id="no-btn" onmouseover="runAway('no-btn')" onclick="runAway('no-btn')" class="runaway-btn px-8 py-3 bg-slate-700 text-slate-300 font-bold rounded-xl border border-slate-600">
+                <button id="no-btn" onmouseover="runAway('no-btn')" onclick="runAway('no-btn')" class="runaway-btn px-8 py-3 bg-slate-800 text-slate-300 font-bold rounded-xl border border-slate-700">
                     NO 😜
                 </button>
             </div>
         </div>
 
-        <!-- STAGE 1: Interactive Date Form (Hidden initially) -->
-        <div id="stage-planner" class="hidden space-y-6 fade-in">
-            <!-- Step 1: Vibe Selection -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">1. Select Date Vibe</label>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="selectOption('vibe', 'Cozy & Chill', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">☕</div>
-                        <div class="text-sm font-semibold text-white">Cozy & Chill</div>
-                        <div class="text-xs text-slate-400">Cafe & talks</div>
-                    </button>
-                    <button onclick="selectOption('vibe', 'Adventure Mode', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">🗺️</div>
-                        <div class="text-sm font-semibold text-white">Adventure</div>
-                        <div class="text-xs text-slate-400">Exploring spots</div>
-                    </button>
+        <!-- INTERFACE 2: Interactive Date Planner -->
+        <div id="interface-2" class="hidden space-y-6 fade-in">
+            
+            <!-- Dynamic Memory Feature -->
+            <div class="relative h-32 rounded-2xl overflow-hidden border border-slate-700/80 shadow-inner">
+                <img id="planner-preview-img" src="photo4.jpeg?v=5" alt="Our Memory" class="w-full h-full object-cover transition-all duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-3">
+                    <span class="text-xs font-semibold text-pink-300">Planning Our Next Memory ✨</span>
                 </div>
             </div>
 
-            <!-- Step 2: Food Preference -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">2. What are we eating, Puchki?</label>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="selectOption('food', 'Street Food Crawl', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">🍕</div>
-                        <div class="text-sm font-semibold text-white">Street Eats</div>
-                        <div class="text-xs text-slate-400">Spicy fast food</div>
-                    </button>
-                    <button onclick="selectOption('food', 'Fancy Dinner Date', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">🍝</div>
-                        <div class="text-sm font-semibold text-white">Fine Dining</div>
-                        <div class="text-xs text-slate-400">Aesthetic dinner</div>
-                    </button>
+            <!-- Steps -->
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">1. Select Date Vibe</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="selectOption('vibe', 'Cozy & Chill', this, 'photo1.jpeg?v=5')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                            <div class="text-lg">☕</div>
+                            <div class="text-sm font-semibold text-white">Cozy & Chill</div>
+                            <div class="text-xs text-slate-400">Cafe & talks</div>
+                        </button>
+                        <button onclick="selectOption('vibe', 'Adventure Mode', this, 'photo2.jpeg?v=5')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                            <div class="text-lg">🗺️</div>
+                            <div class="text-sm font-semibold text-white">Adventure</div>
+                            <div class="text-xs text-slate-400">Exploring spots</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">2. What are we eating, Puchki?</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="selectOption('food', 'Street Food Crawl', this, 'photo3.jpeg?v=5')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                            <div class="text-lg">🍕</div>
+                            <div class="text-sm font-semibold text-white">Street Eats</div>
+                            <div class="text-xs text-slate-400">Spicy fast food</div>
+                        </button>
+                        <button onclick="selectOption('food', 'Fancy Dinner Date', this, 'photo4.jpeg?v=5')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                            <div class="text-lg">🍝</div>
+                            <div class="text-sm font-semibold text-white">Fine Dining</div>
+                            <div class="text-xs text-slate-400">Aesthetic dinner</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">3. The Finale</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="selectOption('activity', 'Late Night Drive', this, 'photo5.jpeg?v=5')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                            <div class="text-lg">🚗</div>
+                            <div class="text-sm font-semibold text-white">Long Drive</div>
+                            <div class="text-xs text-slate-400">Music & lights</div>
+                        </button>
+                        <button onclick="selectOption('activity', 'Dessert & Stargazing', this, 'photo1.jpeg?v=5')" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
+                            <div class="text-lg">🍦</div>
+                            <div class="text-sm font-semibold text-white">Dessert Run</div>
+                            <div class="text-xs text-slate-400">Ice cream talks</div>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Step 3: Ending Activity -->
-            <div>
-                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">3. The Finale</label>
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="selectOption('activity', 'Late Night Drive', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">🚗</div>
-                        <div class="text-sm font-semibold text-white">Long Drive</div>
-                        <div class="text-xs text-slate-400">Music & lights</div>
-                    </button>
-                    <button onclick="selectOption('activity', 'Dessert & Stargazing', this)" class="option-btn p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-pink-500 text-left transition-all">
-                        <div class="text-lg">🍦</div>
-                        <div class="text-sm font-semibold text-white">Dessert Run</div>
-                        <div class="text-xs text-slate-400">Ice cream talks</div>
-                    </button>
-                </div>
-            </div>
-
-            <button id="submit-btn" onclick="goToPaymentStage()" disabled class="w-full py-3.5 bg-slate-700 text-slate-400 font-bold rounded-xl transition-all shadow-lg cursor-not-allowed">
+            <button id="submit-btn" onclick="goToInterface(3)" disabled class="w-full py-3.5 bg-slate-800 text-slate-500 font-bold rounded-xl transition-all shadow-lg cursor-not-allowed">
                 Lock In Choices 🔒
             </button>
         </div>
 
-        <!-- STAGE 2: Who Pays Prank Gate (Hidden initially) -->
-        <div id="stage-payment-prank" class="hidden text-center space-y-6 py-4 fade-in relative min-h-[200px]">
-            <h2 class="text-xl font-extrabold text-white">Date Ka Kharcha Kaun Uthayega? 💸</h2>
-            <p class="text-xs text-slate-400">Be honest, Puchki...</p>
+        <!-- INTERFACE 3: Payment Prank -->
+        <div id="interface-3" class="hidden text-center space-y-6 py-4 fade-in relative min-h-[260px] flex flex-col justify-center items-center">
+            
+            <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-emerald-500/50 mb-2 shadow-lg">
+                <img src="photo5.jpeg?v=5" alt="Payment Memory" class="w-full h-full object-cover">
+            </div>
 
-            <div class="flex justify-center items-center gap-4 relative min-h-[80px]" id="payment-buttons">
-                <button onclick="selectTannuPays()" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition-all">
+            <div>
+                <h2 class="text-xl font-extrabold text-white">Date Ka Kharcha Kaun Uthayega? 💸</h2>
+                <p class="text-xs text-slate-400 mt-1">Be honest, Puchki...</p>
+            </div>
+
+            <div class="flex flex-row items-center justify-center gap-6 w-full relative min-h-[80px]" id="payment-buttons">
+                <button onclick="goToInterface(4)" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition-all z-10">
                     Tannu Uthayegi 💅
                 </button>
-                <button id="rahul-btn" onmouseover="runAway('rahul-btn')" onclick="runAway('rahul-btn')" class="runaway-btn px-6 py-3 bg-slate-700 text-slate-300 font-bold rounded-xl border border-slate-600">
+                <button id="rahul-btn" onmouseover="runAway('rahul-btn')" onclick="runAway('rahul-btn')" class="runaway-btn px-6 py-3 bg-slate-800 text-slate-300 font-bold rounded-xl border border-slate-700">
                     Rahul karega 🙈
                 </button>
             </div>
         </div>
 
-        <!-- STAGE 3: Final Pass & PhonePe QR Code (Hidden initially) -->
-        <div id="stage-ticket" class="hidden space-y-6 fade-in">
+        <!-- INTERFACE 4: VIP Boarding Pass & PhonePe QR Code -->
+        <div id="interface-4" class="hidden space-y-6 fade-in">
             
-            <!-- VIP Pass Header -->
+            <!-- Pass Header -->
             <div class="border-2 border-dashed border-pink-500/40 rounded-2xl p-4 bg-pink-500/5 relative">
                 <div class="flex justify-between items-start mb-4">
                     <div>
-                        <span class="text-xs uppercase tracking-widest text-pink-400 font-semibold">VIP Pass Issued To</span>
+                        <span class="text-[10px] uppercase tracking-widest text-pink-400 font-semibold">VIP Pass Issued To</span>
                         <h2 class="text-2xl font-bold text-white">Tannu <span class="text-sm text-slate-400">(Puchki)</span></h2>
                     </div>
                     <span class="px-2.5 py-1 bg-emerald-500/20 text-emerald-400 text-xs rounded-full font-bold">CONFIRMED</span>
@@ -187,28 +211,27 @@
                 
                 <div class="text-2xl font-extrabold text-emerald-400">$100 USD <span class="text-xs text-slate-400 font-normal">(Date Fee)</span></div>
 
-                <!-- Custom PhonePe QR Generator -->
+                <!-- Custom PhonePe QR Code updated to 6287148397@ybl -->
                 <div class="flex justify-center py-2">
-                    <div class="bg-white p-3 rounded-xl border-2 border-emerald-500">
-                        <!-- Generates live QR code requesting 100 USD payment -->
-                        <img id="qr-code-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=rahul77555666@ybl%26pn=Rahul%26am=100%26cu=USD" alt="PhonePe QR Code" class="w-36 h-36">
+                    <div class="bg-white p-3 rounded-xl border-2 border-emerald-500 shadow-lg">
+                        <img id="qr-code-img" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=6287148397@ybl%26pn=Rahul%26am=100%26cu=USD" alt="PhonePe QR Code" class="w-36 h-36">
                     </div>
                 </div>
-                <p class="text-[10px] text-slate-400">Scan via PhonePe / UPI to confirm our date! 📲</p>
+                <p class="text-[10px] text-slate-400">Scan via PhonePe / GPay / PayTM to confirm our date! 📲</p>
             </div>
 
-            <!-- Photo Gallery Section -->
+            <!-- Photo Gallery Grid -->
             <div>
                 <h3 class="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3 text-center">Our Memories Gallery 📸</h3>
                 
                 <div class="grid grid-cols-3 gap-2">
-                    <img src="photo1.jpeg?v=3" alt="Memory 1" class="rounded-lg object-cover h-24 w-full border border-slate-700 hover:scale-105 transition-all">
-                    <img src="photo2.jpeg?v=3" alt="Memory 2" class="rounded-lg object-cover h-24 w-full border border-slate-700 hover:scale-105 transition-all">
-                    <img src="photo3.jpeg?v=3" alt="Memory 3" class="rounded-lg object-cover h-24 w-full border border-slate-700 hover:scale-105 transition-all">
+                    <img src="photo1.jpeg?v=5" alt="Memory 1" class="rounded-lg object-cover h-24 w-full border border-slate-700 hover:scale-105 transition-all">
+                    <img src="photo2.jpeg?v=5" alt="Memory 2" class="rounded-lg object-cover h-24 w-full border border-slate-700 hover:scale-105 transition-all">
+                    <img src="photo3.jpeg?v=5" alt="Memory 3" class="rounded-lg object-cover h-24 w-full border border-slate-700 hover:scale-105 transition-all">
                 </div>
                 <div class="grid grid-cols-2 gap-2 mt-2">
-                    <img src="photo4.jpeg?v=3" alt="Memory 4" class="rounded-lg object-cover h-28 w-full border border-slate-700 hover:scale-105 transition-all">
-                    <img src="photo5.jpeg?v=3" alt="Memory 5" class="rounded-lg object-cover h-28 w-full border border-slate-700 hover:scale-105 transition-all">
+                    <img src="photo4.jpeg?v=5" alt="Memory 4" class="rounded-lg object-cover h-28 w-full border border-slate-700 hover:scale-105 transition-all">
+                    <img src="photo5.jpeg?v=5" alt="Memory 5" class="rounded-lg object-cover h-28 w-full border border-slate-700 hover:scale-105 transition-all">
                 </div>
             </div>
 
@@ -221,26 +244,50 @@
     <script>
         const selections = { vibe: null, food: null, activity: null };
 
-        // Runaway Button Prank Logic
+        function goToInterface(interfaceNum) {
+            // Hide all interfaces
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`interface-${i}`).classList.add('hidden');
+            }
+
+            // Show selected interface
+            document.getElementById(`interface-${interfaceNum}`).classList.remove('hidden');
+
+            if (interfaceNum === 4) {
+                // Populate Pass Details
+                document.getElementById('res-vibe').innerText = selections.vibe;
+                document.getElementById('res-food').innerText = selections.food;
+                document.getElementById('res-activity').innerText = selections.activity;
+
+                // Launch Confetti
+                confetti({
+                    particleCount: 120,
+                    spread: 80,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
         function runAway(buttonId) {
             const btn = document.getElementById(buttonId);
-            const parent = btn.parentElement;
-            const parentRect = parent.getBoundingClientRect();
             
-            // Generate random positions within container bounds
-            const randomX = Math.floor(Math.random() * (parentRect.width - 100)) - (parentRect.width / 2 - 50);
-            const randomY = Math.floor(Math.random() * 100) - 50;
+            if (btn.style.position !== 'absolute') {
+                btn.style.position = 'absolute';
+            }
 
-            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            const x = Math.floor(Math.random() * 220) - 110;
+            const y = Math.floor(Math.random() * 120) - 60;
+
+            btn.style.transform = `translate(${x}px, ${y}px)`;
         }
 
-        function acceptDate() {
-            document.getElementById('stage-gate').classList.add('hidden');
-            document.getElementById('stage-planner').classList.remove('hidden');
-        }
-
-        function selectOption(category, value, btnElement) {
+        function selectOption(category, value, btnElement, photoUrl) {
             selections[category] = value;
+
+            // Swap preview photo dynamically
+            if (photoUrl) {
+                document.getElementById('planner-preview-img').src = photoUrl;
+            }
 
             const parent = btnElement.parentElement;
             parent.querySelectorAll('.option-btn').forEach(btn => {
@@ -255,7 +302,7 @@
             if (selections.vibe && selections.food && selections.activity) {
                 const submitBtn = document.getElementById('submit-btn');
                 submitBtn.disabled = false;
-                submitBtn.classList.remove('bg-slate-700', 'text-slate-400', 'cursor-not-allowed');
+                submitBtn.classList.remove('bg-slate-800', 'text-slate-500', 'cursor-not-allowed');
                 submitBtn.classList.add('bg-pink-600', 'hover:bg-pink-500', 'text-white', 'shadow-pink-500/25');
                 submitBtn.innerText = "Continue To Payment ➡️";
             }
@@ -271,28 +318,6 @@
             document.body.appendChild(heart);
 
             setTimeout(() => heart.remove(), 4000);
-        }
-
-        function goToPaymentStage() {
-            document.getElementById('stage-planner').classList.add('hidden');
-            document.getElementById('stage-payment-prank').classList.remove('hidden');
-        }
-
-        function selectTannuPays() {
-            // Populate Ticket Details
-            document.getElementById('res-vibe').innerText = selections.vibe;
-            document.getElementById('res-food').innerText = selections.food;
-            document.getElementById('res-activity').innerText = selections.activity;
-
-            document.getElementById('stage-payment-prank').classList.add('hidden');
-            document.getElementById('stage-ticket').classList.remove('hidden');
-
-            // Trigger Confetti
-            confetti({
-                particleCount: 120,
-                spread: 80,
-                origin: { y: 0.6 }
-            });
         }
     </script>
 </body>
